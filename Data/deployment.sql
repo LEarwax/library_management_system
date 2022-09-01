@@ -20,20 +20,70 @@ CREATE TABLE author (
 	LastName VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE book (
-	BookID INT PRIMARY KEY NOT NULL,
-	Title VARCHAR(50) NOT NULL,
-	CategoryID INT,
-	PublicationDate DATETIME,
-	CopiesOwned INT NOT NULL,
-);
-
-CREATE TABLE book_author (
-	BookID INT NOT NULL,
-	AuthorID INT NOT NULL
-);
-
 CREATE TABLE category (
 	CategoryID INT PRIMARY KEY NOT NULL,
 	CategoryName VARCHAR(50) NOT NULL
 );
+
+CREATE TABLE book (
+	BookID INT PRIMARY KEY NOT NULL,
+	Title VARCHAR(50) NOT NULL,
+	PublicationDate DATETIME,
+	CopiesOwned INT NOT NULL,
+	CategoryID INT FOREIGN KEY REFERENCES category(CategoryID),
+);
+
+CREATE TABLE book_author (
+	BookID INT FOREIGN KEY REFERENCES book(BookID),
+	AuthorID INT FOREIGN KEY REFERENCES author(AuthorID)
+);
+
+CREATE TABLE member_status (
+	MemberStatusID INT PRIMARY KEY NOT NULL,
+	StatusValue varchar(50) NOT NULL
+);
+
+CREATE TABLE member (
+	MemberID INT PRIMARY KEY NOT NULL,
+	FirstName varchar(50) NOT NULL,
+	LastName varchar(50) NOT NULL,
+	JoinedDate DATETIME NOT NULL,
+	MemberStatusID INT FOREIGN KEY REFERENCES member_status(MemberStatusID)
+);
+
+CREATE TABLE fine (
+	FineID INT PRIMARY KEY NOT NULL,
+	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
+	LoanID INT NOT NULL,
+	FineDate DATETIME NOT NULL,
+	FineAmount DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE fine_payment (
+	FinePaymentID INT PRIMARY KEY NOT NULL,
+	MemberID INT NOT NULL,
+	PaymentDate DATETIME NOT NULL,
+	PaymentAmount DECIMAL(10,2) NOT NULL
+);
+
+CREATE TABLE loan (
+	LoanID INT PRIMARY KEY NOT NULL,
+	BookID INT NOT NULL,
+	MemberID INT NOT NULL,
+	LoanDate DATETIME NOT NULL,
+	ReturnedDate DATETIME
+);
+
+CREATE TABLE reservation (
+	ReservationID INT PRIMARY KEY NOT NULL,
+	BookID INT NOT NULL,
+	MemberID INT NOT NULL,
+	ReservationDate DATETIME NOT NULL,
+	ReservationStatusID INT NOT NULL
+);
+
+CREATE TABLE reservation_status (
+	ReservationStatusID INT PRIMARY KEY NOT NULL,
+	StatusValue varchar(50) NOT NULL
+);
+GO
