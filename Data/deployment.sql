@@ -61,29 +61,29 @@ CREATE TABLE fine (
 
 CREATE TABLE fine_payment (
 	FinePaymentID INT PRIMARY KEY NOT NULL,
-	MemberID INT NOT NULL,
+	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	PaymentDate DATETIME NOT NULL,
 	PaymentAmount DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE loan (
 	LoanID INT PRIMARY KEY NOT NULL,
-	BookID INT NOT NULL,
-	MemberID INT NOT NULL,
+	BookID INT FOREIGN KEY REFERENCES book(BookID),
+	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	LoanDate DATETIME NOT NULL,
 	ReturnedDate DATETIME
-);
-
-CREATE TABLE reservation (
-	ReservationID INT PRIMARY KEY NOT NULL,
-	BookID INT NOT NULL,
-	MemberID INT NOT NULL,
-	ReservationDate DATETIME NOT NULL,
-	ReservationStatusID INT NOT NULL
 );
 
 CREATE TABLE reservation_status (
 	ReservationStatusID INT PRIMARY KEY NOT NULL,
 	StatusValue varchar(50) NOT NULL
+);
+
+CREATE TABLE reservation (
+	ReservationID INT PRIMARY KEY NOT NULL,
+	BookID INT FOREIGN KEY REFERENCES book(BookID),
+	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
+	ReservationDate DATETIME NOT NULL,
+	ReservationStatusID INT FOREIGN KEY REFERENCES reservation_status(ReservationStatusID) ON CASCADE DELETE
 );
 GO
