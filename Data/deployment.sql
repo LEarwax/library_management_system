@@ -84,6 +84,6 @@ CREATE TABLE reservation (
 	BookID INT FOREIGN KEY REFERENCES book(BookID),
 	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	ReservationDate DATETIME NOT NULL,
-	ReservationStatusID INT FOREIGN KEY REFERENCES reservation_status(ReservationStatusID) ON CASCADE DELETE
+	ReservationStatusID INT FOREIGN KEY REFERENCES reservation_status(ReservationStatusID)
 );
 GO
