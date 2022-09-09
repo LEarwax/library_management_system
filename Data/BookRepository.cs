@@ -16,55 +16,75 @@ namespace library_management_system.Data
             _configuration = configuration;
         }
 
-         public Task<Book> GetBook(int bookID)
+        public async Task<Book> GetBook(int id)
         {
-            throw new NotImplementedException();
+
+            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                cnn.Open();
+                var sql = $"SELECT * FROM [dbo].[book] WHERE BookID = {id}";
+                
+                var dbBook = new Book();
+
+                using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                {
+                    var reader = cmd.ExecuteReader();
+
+                    reader.Read();
+                    Int32.TryParse(reader["BookID"].ToString(), out int bookID);
+                    Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
+                    Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
+
+                    dbBook = new Book
+                    {
+                        BookID = bookID,
+                        Title = reader["Title"].ToString(),
+                        PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString()),
+                        CopiesOwned = copiesOwned,
+                        CategoryID = categoryID
+                    };
+                    
+                }
+
+                cnn.Close();
+                return dbBook;
+            }
         }
 
         public async Task<IEnumerable<Book>> GetBooks()
         {
             List<Book> dbBooks = new List<Book>();
             
-            try
+            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+                cnn.Open();
+                var sql = "SELECT * FROM [dbo].[book]";
+                using (SqlCommand cmd = new SqlCommand(sql, cnn))
                 {
-                    cnn.Open();
-                    var sql = "SELECT * FROM [dbo].[book]";
-                    using (SqlCommand cmd = new SqlCommand(sql, cnn))
+
+                    var reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
+                        Int32.TryParse(reader["BookID"].ToString(), out int bookID);
+                        Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
+                        Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
 
-                        var reader = cmd.ExecuteReader();
-                        while (reader.Read())
+                        var book = new Book
                         {
-                            Int32.TryParse(reader["BookID"].ToString(), out int bookID);
-                            Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
-                            Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
+                            BookID = bookID,
+                            Title = reader["Title"].ToString(),
+                            PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString()),
+                            CopiesOwned = copiesOwned,
+                            CategoryID = categoryID
+                        };
 
-                            var book = new Book
-                            {
-                                BookID = bookID,
-                                Title = reader["Title"].ToString(),
-                                PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString()),
-                                CopiesOwned = copiesOwned,
-                                CategoryID = categoryID
-                            };
-
-                            dbBooks.Add(book);
-                        }
+                        dbBooks.Add(book);
                     }
-                    
-                    cnn.Close();
-                    return dbBooks;
-                    
                 }
-            }
-            catch (System.Exception)
-            {
                 
-                throw;
+                cnn.Close();
+                return dbBooks;
             }
-
             
         }
 

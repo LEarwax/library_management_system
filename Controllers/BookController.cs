@@ -24,5 +24,11 @@ namespace library_management_system.Controllers
         {
             return Ok(await _bookService.GetAllBooks());
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetBookDto>> GetOne(int id)
+        {
+            return Ok(await _bookService.GetBookByID(id));
+        }
     }
 }

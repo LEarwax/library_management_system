@@ -37,5 +37,25 @@ namespace library_management_system.Services.BookService
             
             return response;
         }
+
+        public async Task<ServiceResponse<GetBookDto>> GetBookByID(int id)
+        {
+            ServiceResponse<GetBookDto> response = new ServiceResponse<GetBookDto>();
+
+            try
+            {
+                var dbBook = await _repo.GetBook(id);
+                response.Data = _mapper.Map<GetBookDto>(dbBook);
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                response.StackTrace = ex.StackTrace;                                
+            }
+            
+            return response;
+        }
     }
 }
