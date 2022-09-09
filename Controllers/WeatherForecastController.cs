@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace library_management_system.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -12,10 +13,20 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IConfiguration configuration)
     {
         _logger = logger;
+        var builder = new ConfigurationBuilder();
+        _configuration = configuration;
+    }
+
+    [HttpGet("getConfig")]
+    public string GetConfig() 
+    {
+        var connString = _configuration.GetConnectionString("DefaultConnection");
+        return connString;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
