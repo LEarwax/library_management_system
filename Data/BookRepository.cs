@@ -10,12 +10,10 @@ namespace library_management_system.Data
 {
     public class BookRepository : IBookRepository
     {
-        private readonly IConfiguration _configuration;
         private readonly DataContext _context;
 
-        public BookRepository(IConfiguration configuration, DataContext context)
+        public BookRepository(DataContext context)
         {
-            _configuration = configuration;
             _context = context;
         }
 
@@ -49,22 +47,10 @@ namespace library_management_system.Data
 
         public async Task DeleteBook(int bookID)
         {
-            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                await cnn.OpenAsync();
-                var sql = $@"
-                        DELETE FROM dbo.book 
-                        WHERE BookID = {bookID}";
-
-                using (SqlCommand cmd = new SqlCommand(sql, cnn))
-                {
-                    var reader = await cmd.ExecuteNonQueryAsync();
-                }
-                
-                await cnn.CloseAsync();
-            }
+            Book dbBook = await _context.Books.FirstAsync(b => b.BookID == bookID);
+            _context.Books.Remove(dbBook);
+            await _context.SaveChangesAsync();
         }
 
-        
     }
 }
