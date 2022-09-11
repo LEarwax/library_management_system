@@ -122,20 +122,51 @@ namespace library_management_system.Data
                 
                 await cnn.CloseAsync();
                 return dbBook;
-        }
+            }
 
         
-    }
+        }
 
-    public void DeleteBook(int Book)
-    {
-        throw new NotImplementedException();
-    }
+        public async Task<Book> UpdateBook(Book book)
+        {
+            var dbBook = new Book();
 
-    public Task<Book> UpdateBook(Book book)
-    {
-        throw new NotImplementedException();
-    }
+            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await cnn.OpenAsync();
+                var sql = $@"
+                        UPDATE dbo.book 
+                        SET Title = '{book.Title}', PublicationDate = '{book.PublicationDate}', CopiesOwned = '{book.CopiesOwned}', CategoryID = '{book.CategoryID}'
+                        OUTPUT INSERTED.BookID, INSERTED.Title, INSERTED.PublicationDate, INSERTED.CopiesOwned, INSERTED.CategoryID 
+                        WHERE BookID = {book.BookID}";
+
+                using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                {
+
+                    var reader = await cmd.ExecuteReaderAsync();
+                    await reader.ReadAsync();
+                    
+                        Int32.TryParse(reader["BookID"].ToString(), out int bookID);
+                        Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
+                        Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
+
+                        
+                        dbBook.BookID = bookID;
+                        dbBook.Title = reader["Title"].ToString();
+                        dbBook.PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString());
+                        dbBook.CopiesOwned = copiesOwned;
+                        dbBook.CategoryID = categoryID;
+                }
+                
+                await cnn.CloseAsync();
+                return dbBook;
+            }
+        }
+
+        public void DeleteBook(int Book)
+        {
+            throw new NotImplementedException();
+        }
 
         
     }

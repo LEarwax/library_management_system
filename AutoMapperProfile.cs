@@ -14,6 +14,7 @@ namespace library_management_system
         {
             CreateMap<Book, GetBookDto>();    
             CreateMap<AddBookDto, Book>();
+            CreateMap<UpdateBookDto, Book>();
         }
     }
 }

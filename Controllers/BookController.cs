@@ -20,19 +20,25 @@ namespace library_management_system.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<GetBookDto>> AddBook(AddBookDto newBook)
+        public async Task<ActionResult<GetBookDto>> AddBookAsync(AddBookDto newBook)
         {
             return Ok(await _bookService.AddBookAsync(newBook));
         }
 
+        [HttpPut]
+        public async Task<ActionResult<GetBookDto>> UpdateBookAsync(UpdateBookDto updatedBook)
+        {
+            return Ok(await _bookService.UpdateBookAsync(updatedBook));
+        }
+
         [HttpGet("GetAll")]
-        public async Task<ActionResult<List<GetBookDto>>> Get()
+        public async Task<ActionResult<List<GetBookDto>>> GetAsync()
         {
             return Ok(await _bookService.GetAllBooksAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetBookDto>> GetOne(int id)
+        public async Task<ActionResult<GetBookDto>> GetOneAsync(int id)
         {
             return Ok(await _bookService.GetBookByIDAsync(id));
         }
