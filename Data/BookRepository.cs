@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using library_management_system.Dtos.Book;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -88,19 +89,54 @@ namespace library_management_system.Data
             
         }
 
-        public Task<Book> AddBook(Book book)
+        public async Task<Book> AddBook(Book book)
         {
-            throw new NotImplementedException();
+            var dbBook = new Book();
+            
+            
+            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await cnn.OpenAsync();
+                var sql = $@"
+                        INSERT INTO dbo.book (Title, PublicationDate, CopiesOwned, CategoryID)
+                        OUTPUT INSERTED.BookID, INSERTED.Title, INSERTED.PublicationDate, INSERTED.CopiesOwned, INSERTED.CategoryID 
+                        VALUES ('{book.Title}', '{book.PublicationDate}', {book.CopiesOwned}, {book.CategoryID})";
+                using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                {
+
+                    var reader = await cmd.ExecuteReaderAsync();
+                    await reader.ReadAsync();
+                    
+                        Int32.TryParse(reader["BookID"].ToString(), out int bookID);
+                        Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
+                        Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
+
+                        
+                        dbBook.BookID = bookID;
+                        dbBook.Title = reader["Title"].ToString();
+                        dbBook.PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString());
+                        dbBook.CopiesOwned = copiesOwned;
+                        dbBook.CategoryID = categoryID;
+                    
+                }
+                
+                await cnn.CloseAsync();
+                return dbBook;
         }
 
-        public void DeleteBook(int Book)
-        {
-            throw new NotImplementedException();
-        }
+        
+    }
 
-        public Task<Book> UpdateBook(Book book)
-        {
-            throw new NotImplementedException();
-        }
+    public void DeleteBook(int Book)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Book> UpdateBook(Book book)
+    {
+        throw new NotImplementedException();
+    }
+
+        
     }
 }

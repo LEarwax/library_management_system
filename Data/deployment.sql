@@ -15,18 +15,18 @@ DROP TABLE IF EXISTS [dbo].[reservation_status];
 GO
 
 CREATE TABLE author (
-	AuthorID INT PRIMARY KEY NOT NULL,
+	AuthorID INT IDENTITY(1, 1) PRIMARY KEY,
 	FirstName VARCHAR(40) NOT NULL,
 	LastName VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE category (
-	CategoryID INT PRIMARY KEY NOT NULL,
+	CategoryID INT IDENTITY(1, 1) PRIMARY KEY,
 	CategoryName VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE book (
-	BookID INT PRIMARY KEY NOT NULL,
+	BookID INT IDENTITY(1, 1) PRIMARY KEY,
 	Title VARCHAR(50) NOT NULL,
 	PublicationDate DATETIME,
 	CopiesOwned INT NOT NULL,
@@ -39,12 +39,12 @@ CREATE TABLE book_author (
 );
 
 CREATE TABLE member_status (
-	MemberStatusID INT PRIMARY KEY NOT NULL,
+	MemberStatusID INT IDENTITY(1, 1) PRIMARY KEY,
 	StatusValue varchar(50) NOT NULL
 );
 
 CREATE TABLE member (
-	MemberID INT PRIMARY KEY NOT NULL,
+	MemberID INT IDENTITY(1, 1) PRIMARY KEY,
 	FirstName varchar(50) NOT NULL,
 	LastName varchar(50) NOT NULL,
 	JoinedDate DATETIME NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE member (
 );
 
 CREATE TABLE fine (
-	FineID INT PRIMARY KEY NOT NULL,
+	FineID INT IDENTITY(1, 1) PRIMARY KEY,
 	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	LoanID INT NOT NULL,
 	FineDate DATETIME NOT NULL,
@@ -60,14 +60,14 @@ CREATE TABLE fine (
 );
 
 CREATE TABLE fine_payment (
-	FinePaymentID INT PRIMARY KEY NOT NULL,
+	FinePaymentID INT IDENTITY(1, 1) PRIMARY KEY,
 	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	PaymentDate DATETIME NOT NULL,
 	PaymentAmount DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE loan (
-	LoanID INT PRIMARY KEY NOT NULL,
+	LoanID INT IDENTITY(1, 1) PRIMARY KEY,
 	BookID INT FOREIGN KEY REFERENCES book(BookID),
 	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	LoanDate DATETIME NOT NULL,
@@ -75,12 +75,12 @@ CREATE TABLE loan (
 );
 
 CREATE TABLE reservation_status (
-	ReservationStatusID INT PRIMARY KEY NOT NULL,
+	ReservationStatusID INT IDENTITY(1, 1) PRIMARY KEY,
 	StatusValue varchar(50) NOT NULL
 );
 
 CREATE TABLE reservation (
-	ReservationID INT PRIMARY KEY NOT NULL,
+	ReservationID INT IDENTITY(1, 1) PRIMARY KEY,
 	BookID INT FOREIGN KEY REFERENCES book(BookID),
 	MemberID INT FOREIGN KEY REFERENCES member(MemberID),
 	ReservationDate DATETIME NOT NULL,

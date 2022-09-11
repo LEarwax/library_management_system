@@ -13,6 +13,7 @@ namespace library_management_system
         public AutoMapperProfile()
         {
             CreateMap<Book, GetBookDto>();    
+            CreateMap<AddBookDto, Book>();
         }
     }
 }

@@ -18,7 +18,28 @@ namespace library_management_system.Services.BookService
         _mapper = mapper;
     }
 
-        public async Task<ServiceResponse<List<GetBookDto>>> GetAllBooks()
+        public async Task<ServiceResponse<GetBookDto>> AddBookAsync(AddBookDto newBook)
+        {
+            ServiceResponse<GetBookDto> response = new ServiceResponse<GetBookDto>();
+
+            try
+            {
+                var result = await _repo.AddBook(_mapper.Map<Book>(newBook));
+                var addedBook = _mapper.Map<GetBookDto>(result);
+                response.Data = addedBook;
+                response.Success = true;                
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                response.StackTrace = ex.StackTrace;
+            }
+
+            return response;
+        }
+
+        public async Task<ServiceResponse<List<GetBookDto>>> GetAllBooksAsync()
         {
             ServiceResponse<List<GetBookDto>> response = new ServiceResponse<List<GetBookDto>>();
 
@@ -38,7 +59,7 @@ namespace library_management_system.Services.BookService
             return response;
         }
 
-        public async Task<ServiceResponse<GetBookDto>> GetBookByID(int id)
+        public async Task<ServiceResponse<GetBookDto>> GetBookByIDAsync(int id)
         {
             ServiceResponse<GetBookDto> response = new ServiceResponse<GetBookDto>();
 

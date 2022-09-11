@@ -19,16 +19,22 @@ namespace library_management_system.Controllers
             _bookService = bookService;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<GetBookDto>> AddBook(AddBookDto newBook)
+        {
+            return Ok(await _bookService.AddBookAsync(newBook));
+        }
+
         [HttpGet("GetAll")]
         public async Task<ActionResult<List<GetBookDto>>> Get()
         {
-            return Ok(await _bookService.GetAllBooks());
+            return Ok(await _bookService.GetAllBooksAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<GetBookDto>> GetOne(int id)
         {
-            return Ok(await _bookService.GetBookByID(id));
+            return Ok(await _bookService.GetBookByIDAsync(id));
         }
     }
 }
