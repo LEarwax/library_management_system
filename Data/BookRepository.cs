@@ -21,78 +21,12 @@ namespace library_management_system.Data
 
         public async Task<Book> GetBook(int id)
         {
-
             return await _context.Books.FirstOrDefaultAsync(b => b.BookID == id);
-
-            // using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            // {
-            //     cnn.Open();
-            //     var sql = $"SELECT * FROM [dbo].[book] WHERE BookID = {id}";
-                
-            //     var dbBook = new Book();
-
-            //     using (SqlCommand cmd = new SqlCommand(sql, cnn))
-            //     {
-            //         var reader = cmd.ExecuteReader();
-
-            //         reader.Read();
-            //         Int32.TryParse(reader["BookID"].ToString(), out int bookID);
-            //         Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
-            //         Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
-
-            //         dbBook = new Book
-            //         {
-            //             BookID = bookID,
-            //             Title = reader["Title"].ToString(),
-            //             PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString()),
-            //             CopiesOwned = copiesOwned,
-            //             CategoryID = categoryID
-            //         };
-                    
-            //     }
-
-            //     cnn.Close();
-            //     return dbBook;
-            // }
         }
 
         public async Task<IEnumerable<Book>> GetBooks()
         {
-            // List<Book> dbBooks = new List<Book>();
-
             return await _context.Books.ToListAsync();
-            
-            // using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            // {
-            //     cnn.Open();
-            //     var sql = "SELECT * FROM [dbo].[book]";
-            //     using (SqlCommand cmd = new SqlCommand(sql, cnn))
-            //     {
-
-            //         var reader = cmd.ExecuteReader();
-            //         while (reader.Read())
-            //         {
-            //             Int32.TryParse(reader["BookID"].ToString(), out int bookID);
-            //             Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
-            //             Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
-
-            //             var book = new Book
-            //             {
-            //                 BookID = bookID,
-            //                 Title = reader["Title"].ToString(),
-            //                 PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString()),
-            //                 CopiesOwned = copiesOwned,
-            //                 CategoryID = categoryID
-            //             };
-
-            //             dbBooks.Add(book);
-            //         }
-            //     }
-                
-            //     cnn.Close();
-            //     return dbBooks;
-            // }
-            
         }
 
         public async Task<int> AddBook(Book book)
@@ -100,78 +34,17 @@ namespace library_management_system.Data
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
             return book.BookID;
-            
-
-            // var dbBook = new Book();
-            
-            
-            // using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            // {
-            //     await cnn.OpenAsync();
-            //     var sql = $@"
-            //             INSERT INTO dbo.book (Title, PublicationDate, CopiesOwned, CategoryID)
-            //             OUTPUT INSERTED.BookID, INSERTED.Title, INSERTED.PublicationDate, INSERTED.CopiesOwned, INSERTED.CategoryID 
-            //             VALUES ('{book.Title}', '{book.PublicationDate}', {book.CopiesOwned}, {book.CategoryID})";
-            //     using (SqlCommand cmd = new SqlCommand(sql, cnn))
-            //     {
-
-            //         var reader = await cmd.ExecuteReaderAsync();
-            //         await reader.ReadAsync();
-                    
-            //             Int32.TryParse(reader["BookID"].ToString(), out int bookID);
-            //             Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
-            //             Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
-
-                        
-            //             dbBook.BookID = bookID;
-            //             dbBook.Title = reader["Title"].ToString();
-            //             dbBook.PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString());
-            //             dbBook.CopiesOwned = copiesOwned;
-            //             dbBook.CategoryID = categoryID;
-                    
-            //     }
-                
-            //     await cnn.CloseAsync();
-            //     return dbBook;
-            // }
-
-        
         }
 
-        public async Task<Book> UpdateBook(Book book)
+        public async Task<Book> UpdateBook(Book updatedBook)
         {
-            var dbBook = new Book();
-
-            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                await cnn.OpenAsync();
-                var sql = $@"
-                        UPDATE dbo.book 
-                        SET Title = '{book.Title}', PublicationDate = '{book.PublicationDate}', CopiesOwned = '{book.CopiesOwned}', CategoryID = '{book.CategoryID}'
-                        OUTPUT INSERTED.BookID, INSERTED.Title, INSERTED.PublicationDate, INSERTED.CopiesOwned, INSERTED.CategoryID 
-                        WHERE BookID = {book.BookID}";
-
-                using (SqlCommand cmd = new SqlCommand(sql, cnn))
-                {
-
-                    var reader = await cmd.ExecuteReaderAsync();
-                    await reader.ReadAsync();
-                    
-                        Int32.TryParse(reader["BookID"].ToString(), out int bookID);
-                        Int32.TryParse(reader["CopiesOwned"].ToString(), out int copiesOwned);
-                        Int32.TryParse(reader["CategoryID"].ToString(), out int categoryID);
-
-                        
-                        dbBook.BookID = bookID;
-                        dbBook.Title = reader["Title"].ToString();
-                        dbBook.PublicationDate = DateTime.Parse(reader["PublicationDate"].ToString());
-                        dbBook.CopiesOwned = copiesOwned;
-                        dbBook.CategoryID = categoryID;
-                }
-                
-                await cnn.CloseAsync();
-                return dbBook;
-            }
+            Book dbBook = await _context.Books.FirstOrDefaultAsync(b => b.BookID == updatedBook.BookID);
+            dbBook.Title = updatedBook.Title;
+            dbBook.PublicationDate = updatedBook.PublicationDate;
+            dbBook.CopiesOwned = updatedBook.CopiesOwned;
+            dbBook.CategoryID = updatedBook.CategoryID;
+            await _context.SaveChangesAsync();
+            return updatedBook;
         }
 
         public async Task DeleteBook(int bookID)
