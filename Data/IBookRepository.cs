@@ -9,7 +9,7 @@ namespace library_management_system.Data
     {
         Task<IEnumerable<Book>> GetBooks();
         Task<Book> GetBook(int bookID);
-        Task<Book> AddBook(Book book);
+        Task<int> AddBook(Book book);
         Task<Book> UpdateBook(Book book);
         Task DeleteBook(int Book);
     }

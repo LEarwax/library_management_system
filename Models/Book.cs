@@ -12,5 +12,6 @@ namespace library_management_system.Models
         public DateTime PublicationDate { get; set; }
         public int CopiesOwned { get; set; }
         public int CategoryID { get; set; }
+        public Category? Category { get; set; }
     }
 }

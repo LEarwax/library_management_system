@@ -11,8 +11,9 @@ namespace library_management_system.Data
     {
         public DataContext(DbContextOptions<DataContext> options) 
             : base(options)
-        {
-            
-        }
+        { }
+
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

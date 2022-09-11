@@ -18,15 +18,14 @@ namespace library_management_system.Services.BookService
         _mapper = mapper;
     }
 
-        public async Task<ServiceResponse<GetBookDto>> AddBookAsync(AddBookDto newBook)
+        public async Task<ServiceResponse<object>> AddBookAsync(AddBookDto newBook)
         {
-            ServiceResponse<GetBookDto> response = new ServiceResponse<GetBookDto>();
+            ServiceResponse<object> response = new ServiceResponse<object>();
 
             try
             {
-                var result = await _repo.AddBook(_mapper.Map<Book>(newBook));
-                var addedBook = _mapper.Map<GetBookDto>(result);
-                response.Data = addedBook;
+                var bookID = await _repo.AddBook(_mapper.Map<Book>(newBook));
+                response.Data = new { BookID = bookID };
                 response.Success = true;                
             }
             catch (Exception ex)
