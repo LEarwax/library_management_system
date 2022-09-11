@@ -163,9 +163,22 @@ namespace library_management_system.Data
             }
         }
 
-        public void DeleteBook(int Book)
+        public async Task DeleteBook(int bookID)
         {
-            throw new NotImplementedException();
+            using (SqlConnection cnn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await cnn.OpenAsync();
+                var sql = $@"
+                        DELETE FROM dbo.book 
+                        WHERE BookID = {bookID}";
+
+                using (SqlCommand cmd = new SqlCommand(sql, cnn))
+                {
+                    var reader = await cmd.ExecuteNonQueryAsync();
+                }
+                
+                await cnn.CloseAsync();
+            }
         }
 
         

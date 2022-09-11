@@ -42,5 +42,11 @@ namespace library_management_system.Controllers
         {
             return Ok(await _bookService.GetBookByIDAsync(id));
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<string>> DeleteAsync(int id)
+        {
+            return Ok(await _bookService.DeleteBookAsync(id));
+        }
     }
 }

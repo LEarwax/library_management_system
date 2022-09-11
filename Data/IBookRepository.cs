@@ -11,6 +11,6 @@ namespace library_management_system.Data
         Task<Book> GetBook(int bookID);
         Task<Book> AddBook(Book book);
         Task<Book> UpdateBook(Book book);
-        void DeleteBook(int Book);
+        Task DeleteBook(int Book);
     }
 }

@@ -98,5 +98,25 @@ namespace library_management_system.Services.BookService
             
             return response;           
         }
+
+        public async Task<ServiceResponse<string>> DeleteBookAsync(int bookID)
+        {
+            ServiceResponse<string> response = new ServiceResponse<string>();
+
+            try
+            {
+                await _repo.DeleteBook(bookID);
+                response.Data = "Deleted";
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+                response.StackTrace = ex.StackTrace;                                
+            }
+            
+            return response;           
+        }
     }
 }

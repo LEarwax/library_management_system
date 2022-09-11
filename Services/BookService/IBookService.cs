@@ -11,6 +11,7 @@ namespace library_management_system.Services.BookService
         Task<ServiceResponse<GetBookDto>> AddBookAsync(AddBookDto newBook);
         Task<ServiceResponse<GetBookDto>> UpdateBookAsync(UpdateBookDto updatedBook);
         Task<ServiceResponse<List<GetBookDto>>> GetAllBooksAsync();
-        Task<ServiceResponse<GetBookDto>> GetBookByIDAsync(int id);
+        Task<ServiceResponse<GetBookDto>> GetBookByIDAsync(int bookID);
+        Task<ServiceResponse<string>> DeleteBookAsync(int bookID);
     }
 }
