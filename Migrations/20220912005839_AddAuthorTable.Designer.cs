@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using library_management_system.Data;
 
@@ -11,9 +12,10 @@ using library_management_system.Data;
 namespace library_management_system.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220912005839_AddAuthorTable")]
+    partial class AddAuthorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,29 +73,6 @@ namespace library_management_system.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("library_management_system.Models.BooksAuthors", b =>
-                {
-                    b.Property<int>("BooksAuthorsID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BooksAuthorsID"), 1L, 1);
-
-                    b.Property<int>("AuthorID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookID")
-                        .HasColumnType("int");
-
-                    b.HasKey("BooksAuthorsID");
-
-                    b.HasIndex("AuthorID");
-
-                    b.HasIndex("BookID");
-
-                    b.ToTable("BooksAuthors");
-                });
-
             modelBuilder.Entity("library_management_system.Models.Category", b =>
                 {
                     b.Property<int>("CategoryID")
@@ -120,25 +99,6 @@ namespace library_management_system.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("library_management_system.Models.BooksAuthors", b =>
-                {
-                    b.HasOne("library_management_system.Models.Author", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("library_management_system.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("library_management_system.Models.Category", b =>

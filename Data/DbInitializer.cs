@@ -45,6 +45,42 @@ namespace library_management_system.Data
                 
                 context.SaveChanges();
             }
+
+            if (!context.Authors.Any())
+            {
+                var authors = new Author[]
+                {
+                    new Author { FirstName = "Cormac", LastName = "McCarthy" },
+                    new Author { FirstName = "Gene", LastName = "Wolfe" },
+                    new Author { FirstName = "Herman", LastName = "Melville" },
+                    new Author { FirstName = "James", LastName = "Elroy" }
+                };
+
+                foreach (Author a in authors)
+                {
+                    context.Authors.Add(a);
+                }
+
+                context.SaveChanges();
+            }
+
+            if (!context.BooksAuthors.Any())
+            {
+                var booksAuthors = new BooksAuthors[]
+                {
+                    new BooksAuthors { BookID = 1, AuthorID = 1 },
+                    new BooksAuthors { BookID = 2, AuthorID = 2},
+                    new BooksAuthors { BookID = 3, AuthorID = 3 },
+                    new BooksAuthors { BookID = 4, AuthorID = 4 }
+                };
+
+                foreach (BooksAuthors ba in booksAuthors)
+                {
+                    context.BooksAuthors.Add(ba);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }
