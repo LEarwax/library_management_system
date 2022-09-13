@@ -117,6 +117,23 @@ namespace library_management_system.Data
 
                 context.SaveChanges();
             }
+
+            if (!context.Loans.Any())
+            {
+                var loans = new Loan[]
+                {
+                    new Loan { BookID = 1, MemberID = 1, LoanDate = DateTime.Now, ReturnedDate = null },
+                    new Loan { BookID = 2, MemberID = 2, LoanDate = DateTime.Now, ReturnedDate = null },
+                    new Loan { BookID = 3, MemberID = 3, LoanDate = DateTime.Now, ReturnedDate = null }
+                };
+
+                foreach (Loan l in loans)
+                {
+                    context.Loans.Add(l);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }
