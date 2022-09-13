@@ -17,5 +17,7 @@ namespace library_management_system.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<BooksAuthors> BooksAuthors { get; set; }
+        public DbSet<MemberStatus> MemberStatuses { get; set; }
+        public DbSet<Member> Members { get; set; }
     }
 }

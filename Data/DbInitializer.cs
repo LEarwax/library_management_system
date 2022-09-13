@@ -81,6 +81,42 @@ namespace library_management_system.Data
 
                 context.SaveChanges();
             }
+
+            if (!context.MemberStatuses.Any())
+            {
+                var memberStatuses = new MemberStatus[]
+                {
+                    new MemberStatus { StatusValue = "Active" },
+                    new MemberStatus { StatusValue = "Inactive"},
+                    new MemberStatus { StatusValue = "Suspended" }
+                };
+
+                foreach (MemberStatus ms in memberStatuses)
+                {
+                    context.MemberStatuses.Add(ms);
+                }
+
+                context.SaveChanges();
+            }
+
+            if (!context.Members.Any())
+            {
+                var members = new Member[]
+                {
+                    new Member { FirstName = "Nicholas", LastName = "Dowling", JoinedDate = DateTime.UtcNow, MemberStatusID = 1 },
+                    new Member { FirstName = "Karla", LastName = "Ruiz", JoinedDate = DateTime.UtcNow, MemberStatusID = 2 },
+                    new Member { FirstName = "Byron", LastName = "Watson", JoinedDate = DateTime.UtcNow, MemberStatusID = 1 },
+                    new Member { FirstName = "Jamie", LastName = "Burkart", JoinedDate = DateTime.UtcNow, MemberStatusID = 3 },
+                    new Member { FirstName = "Evan", LastName = "Hill", JoinedDate = DateTime.UtcNow, MemberStatusID = 1 }
+                };
+
+                foreach (Member m in members)
+                {
+                    context.Members.Add(m);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }
