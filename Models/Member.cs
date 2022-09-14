@@ -13,5 +13,7 @@ namespace library_management_system.Models
         public DateTime JoinedDate { get; set; }
         public int MemberStatusID { get; set; }
         public MemberStatus? MemberStatus { get; set; }
+        public List<Loan>? Loans { get; set; }
+        public List<Fine>? Fines { get; set; }
     }
 }

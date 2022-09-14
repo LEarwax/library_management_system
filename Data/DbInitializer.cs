@@ -134,6 +134,21 @@ namespace library_management_system.Data
 
                 context.SaveChanges();
             }
+
+            if (!context.Fines.Any())
+            {
+                var fines = new Fine[]
+                {
+                    new Fine { MemberID = 2, LoanID = 1, FineDate = new DateTime(2022, 10, 1), FineAmount = 10.00 }
+                };
+
+                foreach (Fine f in fines)
+                {
+                    context.Fines.Add(f);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }

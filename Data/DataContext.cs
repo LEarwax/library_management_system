@@ -20,5 +20,6 @@ namespace library_management_system.Data
         public DbSet<MemberStatus> MemberStatuses { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<Loan> Loans { get; set; }
+        public DbSet<Fine> Fines { get; set; }
     }
 }

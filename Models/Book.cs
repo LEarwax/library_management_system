@@ -13,5 +13,6 @@ namespace library_management_system.Models
         public int CopiesOwned { get; set; }
         public int CategoryID { get; set; }
         public Category? Category { get; set; }
+        public List<Fine>? Fines { get; set; }
     }
 }
