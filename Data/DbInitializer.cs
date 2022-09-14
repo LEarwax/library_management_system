@@ -181,6 +181,21 @@ namespace library_management_system.Data
 
                 context.SaveChanges();
             }
+
+            if (!context.FinePayments.Any())
+            {
+                var finePayments = new FinePayment[]
+                {
+                    new FinePayment { MemberID = 2, PaymentDate = DateTime.Now, PaymentAmount = 25.80 }
+                };
+
+                foreach (FinePayment fp in finePayments)
+                {
+                    context.FinePayments.Add(fp);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }

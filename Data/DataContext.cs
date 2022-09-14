@@ -23,5 +23,6 @@ namespace library_management_system.Data
         public DbSet<Fine> Fines { get; set; }
         public DbSet<ReservationStatus> ReservationStatuses { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<FinePayment> FinePayments { get; set; }
     }
 }
