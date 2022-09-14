@@ -15,5 +15,6 @@ namespace library_management_system.Models
         public MemberStatus? MemberStatus { get; set; }
         public List<Loan>? Loans { get; set; }
         public List<Fine>? Fines { get; set; }
+        public List<Reservation>? Reservations { get; set; }
     }
 }

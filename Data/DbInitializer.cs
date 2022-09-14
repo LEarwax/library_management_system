@@ -149,6 +149,38 @@ namespace library_management_system.Data
 
                 context.SaveChanges();
             }
+
+            if (!context.ReservationStatuses.Any())
+            {
+                var reservationStatuses = new ReservationStatus[]
+                {
+                    new ReservationStatus { Status = "Available" },
+                    new ReservationStatus { Status = "Reserved" }
+                };
+
+                foreach (ReservationStatus rs in reservationStatuses)
+                {
+                    context.ReservationStatuses.Add(rs);
+                }
+
+                context.SaveChanges();
+            }
+
+            if (!context.Reservations.Any())
+            {
+                var reservations = new Reservation[]
+                {
+                    new Reservation { BookID = 1, MemberID = 1, ReservationDate = DateTime.Now, ReservationStatusID = 1 },
+                    new Reservation { BookID = 3, MemberID = 3, ReservationDate = DateTime.Now, ReservationStatusID = 2 }
+                };
+
+                foreach (Reservation r in reservations)
+                {
+                    context.Reservations.Add(r);
+                }
+
+                context.SaveChanges();
+            }
         }
     }
 }
