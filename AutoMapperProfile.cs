@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using library_management_system.Dtos.Book;
 using library_management_system.Dtos.Book.Author;
+using library_management_system.Dtos.Category;
 
 namespace library_management_system
 {
@@ -20,6 +21,10 @@ namespace library_management_system
             CreateMap<AddAuthorDto, Author>();
             CreateMap<Author, GetAuthorDto>();
             CreateMap<UpdateAuthorDto, Author>();
+
+            CreateMap<AddCategoryDto, Category>();
+            CreateMap<Category, GetCategoryDto>();
+            CreateMap<UpdateCategoryDto, Category>();
         }
     }
 }
