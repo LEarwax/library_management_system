@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using library_management_system.Dtos.Book;
+using library_management_system.Dtos.Book.Author;
 
 namespace library_management_system
 {
@@ -15,6 +16,9 @@ namespace library_management_system
             CreateMap<Book, GetBookDto>();    
             CreateMap<AddBookDto, Book>();
             CreateMap<UpdateBookDto, Book>();
+
+            CreateMap<AddAuthorDto, Author>();
+            CreateMap<Author, GetAuthorDto>();
         }
     }
 }
