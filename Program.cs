@@ -3,6 +3,7 @@ using library_management_system.Data;
 using Microsoft.Extensions.DependencyInjection;
 using library_management_system.Services.BookService;
 using Microsoft.EntityFrameworkCore;
+using library_management_system.Services.AuthorService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 // Services
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 var app = builder.Build();
 

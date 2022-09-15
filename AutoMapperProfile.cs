@@ -19,6 +19,7 @@ namespace library_management_system
 
             CreateMap<AddAuthorDto, Author>();
             CreateMap<Author, GetAuthorDto>();
+            CreateMap<UpdateAuthorDto, Author>();
         }
     }
 }
