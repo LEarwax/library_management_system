@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace library_management_system.Data.CategoryRepository
 {
-    public class CategoryRepository : ICategoryInterface
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly DataContext _context;
 
@@ -15,24 +15,24 @@ namespace library_management_system.Data.CategoryRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetCategory(int categoryID)
+        public async Task<Category> GetCategoryByIDAsync(int categoryID)
         {
             return await _context.Categories.FirstOrDefaultAsync(c => c.CategoryID == categoryID);
         }
 
-        public async Task<int> AddCategory(Category category)
+        public async Task<int> AddCategoryAsync(Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
             return category.CategoryID;
         }
 
-        public async Task<Category> UpdateCategory(Category category)
+        public async Task<Category> UpdateCategoryAsync(Category category)
         {
             var dbCategory = await _context.Categories.FirstAsync(c => c.CategoryID == category.CategoryID);
             dbCategory.CategoryName = category.CategoryName;
@@ -40,7 +40,7 @@ namespace library_management_system.Data.CategoryRepository
             return category;
         }
 
-        public async Task DeleteCategory(int categoryID)
+        public async Task DeleteCategoryAsync(int categoryID)
         {
             var dbCategory = await _context.Categories.FirstAsync(c => c.CategoryID == categoryID);
             _context.Categories.Remove(dbCategory);
