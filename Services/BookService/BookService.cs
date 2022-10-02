@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using library_management_system.Data;
+using library_management_system.Data.BookRepository;
 using library_management_system.Dtos.Book;
 
 namespace library_management_system.Services.BookService

@@ -6,7 +6,7 @@ using library_management_system.Dtos.Book;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace library_management_system.Data
+namespace library_management_system.Data.BookRepository
 {
     public class BookRepository : IBookRepository
     {

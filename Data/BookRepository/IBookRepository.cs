@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace library_management_system.Data
+namespace library_management_system.Data.BookRepository
 {
     public interface IBookRepository
     {

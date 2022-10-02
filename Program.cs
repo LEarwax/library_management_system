@@ -1,9 +1,15 @@
 global using library_management_system.Models;
 using library_management_system.Data;
+
+using library_management_system.Data.AuthorRepository;
+using library_management_system.Data.BookRepository;
+using library_management_system.Data.CategoryRepository;
 using Microsoft.Extensions.DependencyInjection;
-using library_management_system.Services.BookService;
+
 using Microsoft.EntityFrameworkCore;
 using library_management_system.Services.AuthorService;
+using library_management_system.Services.BookService;
+using library_management_system.Services.CategoryService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,13 +22,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 // Repos
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
 
 // Services
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
