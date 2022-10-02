@@ -8,6 +8,6 @@ namespace library_management_system.Dtos.Category
     public class GetCategoryDto
     {
         public int CategoryID { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
     }
 }

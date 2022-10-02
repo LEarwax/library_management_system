@@ -7,6 +7,6 @@ namespace library_management_system.Dtos.Category
 {
     public class UpdateCategoryDto
     {
-        public string Name { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
     }
 }

@@ -7,7 +7,7 @@ namespace library_management_system.Dtos.Category
 {
     public class AddCategoryDto
     {
-        public int Category { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public int CategoryID { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
     }
 }
