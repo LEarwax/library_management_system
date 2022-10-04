@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace library_management_system.Dtos.Member
 {
-    public class CreateMemberDto
+    public class AddMemberDto
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
