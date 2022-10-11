@@ -7,7 +7,7 @@ namespace library_management_system.Data.MemberRepository
 {
     public interface IMemberRepository
     {
-        Task<IEnumerable<Member>> GetCategoriesAsync();
+        Task<IEnumerable<Member>> GetMembersAsync();
         Task<Member> GetMemberByIDAsync(int memberID);
         Task<int> AddMemberAsync(Member member);
         Task<Member> UpdateMemberAsync(Member member);

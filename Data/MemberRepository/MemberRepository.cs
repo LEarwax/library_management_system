@@ -30,7 +30,7 @@ namespace library_management_system.Data.MemberRepository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Member>> GetCategoriesAsync()
+        public async Task<IEnumerable<Member>> GetMembersAsync()
         {
             return await _context.Members.ToListAsync();
         }
