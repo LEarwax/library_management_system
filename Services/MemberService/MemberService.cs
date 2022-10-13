@@ -85,7 +85,7 @@ namespace library_management_system.Services.MemberService
             try
             {
                 var dbMembers = await _memberRepository.GetMembersAsync();
-                response.Data = _mapper.Map<List<GetMemberDto>>(dbMembers);
+                response.Data = dbMembers.Select(m => _mapper.Map<GetMemberDto>(m)).ToList();
                 response.Success = true;
             }
             catch (Exception ex)

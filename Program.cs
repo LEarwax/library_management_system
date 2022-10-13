@@ -4,12 +4,15 @@ using library_management_system.Data;
 using library_management_system.Data.AuthorRepository;
 using library_management_system.Data.BookRepository;
 using library_management_system.Data.CategoryRepository;
+using library_management_system.Data.MemberRepository;
+
 using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.EntityFrameworkCore;
 using library_management_system.Services.AuthorService;
 using library_management_system.Services.BookService;
 using library_management_system.Services.CategoryService;
+using library_management_system.Services.MemberService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,13 +30,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+builder.Services.AddScoped<IMemberRepository, MemberRepository>();
 
 // Services
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 
 var app = builder.Build();
 

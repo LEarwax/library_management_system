@@ -6,6 +6,7 @@ using AutoMapper;
 using library_management_system.Dtos.Book;
 using library_management_system.Dtos.Book.Author;
 using library_management_system.Dtos.Category;
+using library_management_system.Dtos.Member;
 
 namespace library_management_system
 {
@@ -25,6 +26,10 @@ namespace library_management_system
             CreateMap<AddCategoryDto, Category>();
             CreateMap<Category, GetCategoryDto>();
             CreateMap<UpdateCategoryDto, Category>();
+
+            CreateMap<AddMemberDto, Member>();
+            CreateMap<Member, GetMemberDto>();
+            CreateMap<UpdateMemberDto, Member>();
         }
     }
 }
